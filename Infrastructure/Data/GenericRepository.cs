@@ -40,6 +40,10 @@ namespace Infrastructure.Data
             return SpeicificationEvaluator<T>.GetQuery(_context.Set<T>().AsQueryable(), spec);
         }
 
-        
+        public async Task<int> CountAsync(ISpecification<T> spec)
+        {
+            //get the count async after we've applied filtering
+            return await ApplySpecification(spec).CountAsync();
+        }
     }
 }
