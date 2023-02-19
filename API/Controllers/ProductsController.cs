@@ -4,6 +4,7 @@ using Core.Interfaces;
 using Core.Specifications;
 using Microsoft.AspNetCore.Mvc;
 using AutoMapper;
+using API.Errors;
 
 namespace API.Controllers
 {
@@ -41,12 +42,16 @@ namespace API.Controllers
         }
 
         [HttpGet("{id}")]
+
+
         public async Task<ActionResult<ProductToReturnDto>> GetProduct(int id)
         {
             //create new instance of product with brands/types spec and pass the ID
             var spec = new ProductsWithTypesAndBrandsSpecification(id);
             //use the specification that is returned to call the get entity method with the specification
            var product = await _productsRepo.GetEntityWithSpec(spec);
+
+           if (product == null) return NotFound(new ApiResponse(404));
 
            return _mapper.Map<Product, ProductToReturnDto>(product);
           
