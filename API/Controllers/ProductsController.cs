@@ -33,20 +33,13 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<Pagination<ProductToReturnDto>>> GetProducts(
-            ProductSpecParams productParams)
+        public async Task<ActionResult<List<ProductToReturnDto>>> GetProducts()
         {
-            var spec = new ProductsWithTypesAndBrandsSpecification(productParams);
-            var countSpec = new ProductWithFiltersForCountSpecification(productParams);
-
-            var totalItems = await _productsRepo.CountAsync(countSpec);
+            var spec = new ProductsWithTypesAndBrandsSpecification();
 
             var products = await _productsRepo.ListAsync(spec);
 
-            var data = _mapper.Map<IReadOnlyList<Product>, IReadOnlyList<ProductToReturnDto>>(products);
-            //map each product returned to the product to return dto and then map it to a list
-            return Ok(new Pagination<ProductToReturnDto>(productParams.PageIndex, productParams.PageSize,
-                                                totalItems, data));
+            return Ok(_mapper.Map<IReadOnlyList<ProductToReturnDto>>(products));
         }
 
         [HttpGet("{id}")]
