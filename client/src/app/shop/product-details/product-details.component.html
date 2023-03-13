@@ -6,7 +6,7 @@
         <div class="col-6 mt-5">
             <h2>{{product.name}}</h2>
             <p style="font-size: 2em;">{{product.price | currency}}</p>
-
+            
             <h5 class="text-primary mb-3" *ngIf="quantityInBasket > 0">
                 You have {{quantityInBasket}} of this item in your basket
             </h5>

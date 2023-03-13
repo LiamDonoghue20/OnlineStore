@@ -31,9 +31,12 @@ export class ProductDetailsComponent implements OnInit {
       next: product => {
         this.product = product;
         this.bcService.set('@productDetails', product.name);
+        //take 1 = only takes 1 value from the basket source observable
         this.basketService.basketSource$.pipe(take(1)).subscribe({
           next: basket => {
+            //checks to see if we have the selected item in the basket currently
             const item = basket?.items.find(x => x.id === +id);
+            //if we have the item in the basket then update the quantities
             if (item) {
               this.quantity = item.quantity;
               this.quantityInBasket = item.quantity;
@@ -55,11 +58,16 @@ export class ProductDetailsComponent implements OnInit {
 
   updateBasket() {
     if (this.product) {
+      //if the quantity is bigger than the quantity in the basket it means we have items needed to be added
       if (this.quantity > this.quantityInBasket) {
+        //value of number of items to be added to the basket of this product
         const itemsToAdd = this.quantity - this.quantityInBasket;
+        //update the quantity in basket amount before calling the service
         this.quantityInBasket += itemsToAdd;
+        //add the product and the quantity
         this.basketService.addItemToBasket(this.product, itemsToAdd);
       } else {
+        //if we're removing items
         const itemsToRemove = this.quantityInBasket - this.quantity;
         this.quantityInBasket -= itemsToRemove;
         this.basketService.removeItemFromBasket(this.product.id, itemsToRemove);
