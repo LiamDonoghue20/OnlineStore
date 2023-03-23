@@ -28,6 +28,6 @@ export class TextInputComponent implements ControlValueAccessor {
     //need to set the controlDr as a form control so we can use it in our template
     return this.controlDir.control as FormControl
   }
-
+//
 
 }
