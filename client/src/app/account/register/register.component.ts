@@ -45,12 +45,10 @@ export class RegisterComponent {
               map(result => result ? {emailExists: true} : null),
               //updating the field to touched via the control so the user can see the email is taken without clicking out of the field
               finalize(() => control.markAsTouched())
-            )
-          }
-        })
-
-      )
+              )
+            })
+          )
+    
+        }
+      }
     }
-  
-
-}
