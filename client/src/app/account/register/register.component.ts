@@ -10,17 +10,17 @@ import { AccountService } from '../account.service';
   styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent {
-  errors: string [] | null = null;
+  errors: string[] | null = null;
 
-  constructor(private fb: FormBuilder, private accountService: AccountService, private router: Router) { }
+  constructor(private fb: FormBuilder, private accountService: AccountService, private router: Router) {}
 
   complexPassword = "(?=^.{6,10}$)(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&amp;*()_+}{&quot;:;'?/&gt;.&lt;,])(?!.*\s).*$"
 
   registerForm = this.fb.group({
     displayName: ['', Validators.required],
     email: ['', [Validators.required, Validators.email], [this.validateEmailNotTaken()]],
-    password: ['', Validators.required, Validators.pattern(this.complexPassword)]
-  })
+    password: ['', [Validators.required, Validators.pattern(this.complexPassword)]],
+  })  
 
   onSubmit(){
     this.accountService.register(this.registerForm.value).subscribe({
