@@ -5,6 +5,7 @@ import { NotfoundComponent } from './core/notfound/not-found.component';
 import { ServerErrorComponent } from './core/server-error/server-error.component';
 import { TestErrorComponent } from './core/test-error/test-error.component';
 import { HomeComponent } from './home/home.component';
+import { OrdersComponent } from './orders/orders.component';
 
 
 const routes: Routes = [
@@ -21,6 +22,11 @@ const routes: Routes = [
   },
   {path: 'account', loadChildren: () => import('./account/account.module').then(m => m.AccountModule)},
   {path: '**', redirectTo: '', pathMatch: 'full'},
+  {
+    path: 'orders',
+    canActivate: [AuthGuard],
+    loadChildren: () => import('./orders/orders.module').then(m => m.OrdersModule)
+  }
 ];
 
 @NgModule({
