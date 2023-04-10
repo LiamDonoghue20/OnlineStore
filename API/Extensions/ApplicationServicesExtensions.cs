@@ -26,11 +26,12 @@ namespace API.Extensions
                 var options = ConfigurationOptions.Parse(config.GetConnectionString("Redis"));
                 return ConnectionMultiplexer.Connect(options);
             });
-
+            services.AddScoped<IBasketRepository, BasketRepository>();
             services.AddScoped<IProductRepository, ProductRepository>();
+            services.AddScoped<IPaymentService, PaymentService>();
             services.AddScoped<IOrderService, OrderService>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
-            services.AddScoped<IBasketRepository, BasketRepository>();
+            
             services.AddScoped<ITokenService, TokenService>();
             //we use type of because the repo is generic, we dont know the type when it is initialised.
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
