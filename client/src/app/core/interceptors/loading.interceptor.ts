@@ -16,9 +16,12 @@ export class LoadingInterceptor implements HttpInterceptor {
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     //takes off the loading interceptor when we are querying if the email already exists when the user signs up
     //this is to prevent the loading spinner appearing every time someone presses a character in the email field
-    if(!request.url.includes('emailExists')){
-      this.busyService.busy();
+    if(!request.url.includes('emailExists') ||
+    request.method === 'POST' && request.url.includes('orders')) {
+      return next.handle(request);
     }
+
+    this.busyService.busy();
     return next.handle(request).pipe(
       delay(1000),
       finalize(() => this.busyService.idle())
