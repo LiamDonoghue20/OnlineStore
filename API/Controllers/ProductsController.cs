@@ -32,6 +32,7 @@ namespace API.Controllers
          
         }
 
+        [Cached(600)]
         [HttpGet]
         public async Task<ActionResult<List<ProductToReturnDto>>> GetProducts()
         {
@@ -42,9 +43,8 @@ namespace API.Controllers
             return Ok(_mapper.Map<IReadOnlyList<ProductToReturnDto>>(products));
         }
 
+        [Cached(600)]
         [HttpGet("{id}")]
-
-
         public async Task<ActionResult<ProductToReturnDto>> GetProduct(int id)
         {
             //create new instance of product with brands/types spec and pass the ID
@@ -58,12 +58,14 @@ namespace API.Controllers
           
         }
 
+        [Cached(600)]
         [HttpGet("brands")]
         public async Task<ActionResult<IReadOnlyList<ProductBrand>>> GetProductBrands()
         {
             return Ok(await _productBrandsRepo.ListAllAsync());
         }
 
+        [Cached(600)]
         [HttpGet("types")]
         public async Task<ActionResult<IReadOnlyList<ProductType>>> GetProductTypes()
         {

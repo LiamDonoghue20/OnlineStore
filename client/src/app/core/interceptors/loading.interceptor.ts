@@ -17,7 +17,8 @@ export class LoadingInterceptor implements HttpInterceptor {
     //takes off the loading interceptor when we are querying if the email already exists when the user signs up
     //this is to prevent the loading spinner appearing every time someone presses a character in the email field
     if(!request.url.includes('emailExists') ||
-    request.method === 'POST' && request.url.includes('orders')) {
+    request.method === 'POST' && request.url.includes('orders') ||
+    request.method === 'DELETE') {
       return next.handle(request);
     }
 

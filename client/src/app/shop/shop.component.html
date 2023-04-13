@@ -2,7 +2,10 @@
     <div class="row" *ngIf="types.length > 0 && brands.length > 0">
         <h5 class="text-warning ms-3">Sort</h5>
         <select class="form-select mb-4" (change)="onSortSelected($event)">
-            <option *ngFor="let sort of sortOptions" [value]="sort.value">{{sort.name}}</option>
+            <option *ngFor="let sort of sortOptions" 
+                    [value]="sort.value"
+                    [selected]="shopParams.sort === sort.value"
+                    >{{sort.name}}</option>
 
         </select>
         <section class="col-3">
@@ -51,6 +54,7 @@
                 <app-pager
                     [totalCount]="totalCount"
                     [pageSize]="shopParams.pageSize"
+                    [pageNumber]="shopParams.pageNumber"
                     (pageChanged)="onPageChanged($event)"></app-pager>
             </div>
         </section>
